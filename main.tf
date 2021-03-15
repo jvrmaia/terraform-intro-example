@@ -1,5 +1,11 @@
+variable "aws_region" {
+  description = "AWS Region"
+  type        = string
+  default     = "us-east-1"
+}
+
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
 module "iam_user" {
@@ -29,9 +35,12 @@ module "iam_assumable_roles" {
 }
 
 output "access_key_id" {
-  value = module.iam_user.this_iam_access_key_id
+  description = "test-user ACCESS_KEY_ID"
+  value       = module.iam_user.this_iam_access_key_id
 }
 
 output "access_key_secret" {
-  value = module.iam_user.this_iam_access_key_secret
+  description = "test-user ACCESS_KEY_SECRET"
+  value       = module.iam_user.this_iam_access_key_secret
+  sensitive   = true
 }
